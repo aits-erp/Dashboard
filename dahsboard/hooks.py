@@ -5,11 +5,11 @@ app_description = "dashboard"
 app_email = "sai@aitsind.com"
 app_license = "mit"
 
+boot_session = "dahsboard.boot.set_home_page"
 # Apps
 # ------------------
 
 # required_apps = []
-
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
 # 	{
