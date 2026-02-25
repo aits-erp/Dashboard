@@ -5,7 +5,14 @@ app_description = "dashboard"
 app_email = "sai@aitsind.com"
 app_license = "mit"
 
-boot_session = "dahsboard.boot.set_home_page"
+# boot_session = "dahsboard.boot.set_home_page"
+
+# on_session_creation = "dahsboard.redirect.after_login_redirect"
+
+app_include_js = [
+    "/assets/dashboard/js/redirect_after_login.js"
+]
+
 # Apps
 # ------------------
 
