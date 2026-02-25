@@ -10,7 +10,7 @@ app_license = "mit"
 # on_session_creation = "dahsboard.redirect.after_login_redirect"
 
 app_include_js = [
-    "/assets/dashboard/js/redirect_after_login.js"
+    "/assets/dahsboard/js/redirect_after_login.js"
 ]
 
 # Apps
