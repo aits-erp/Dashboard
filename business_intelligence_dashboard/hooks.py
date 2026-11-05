@@ -247,3 +247,35 @@ app_license = "mit"
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+
+# ---------------------------------------------------------------------------
+# Business Intelligence Dashboard configuration
+# ---------------------------------------------------------------------------
+
+before_install = "business_intelligence_dashboard.install.before_install"
+after_install = "business_intelligence_dashboard.install.after_install"
+after_migrate = ["business_intelligence_dashboard.install.after_migrate"]
+
+# Default landing page (see boot.py): desk home for the configured roles only
+boot_session = "business_intelligence_dashboard.boot.boot_session"
+get_website_user_home_page = "business_intelligence_dashboard.boot.get_website_user_home_page"
+
+# Any posting / cancelling that changes accounting, stock or party data invalidates cached payloads
+_bid_invalidate = "business_intelligence_dashboard.business_intelligence_dashboard.api.utils.bump_cache_version"
+doc_events = {
+	dt: {"on_submit": _bid_invalidate, "on_cancel": _bid_invalidate}
+	for dt in (
+		"Sales Invoice",
+		"Purchase Invoice",
+		"Sales Order",
+		"Purchase Order",
+		"Purchase Receipt",
+		"Delivery Note",
+		"Payment Entry",
+		"Journal Entry",
+		"Stock Entry",
+		"Stock Reconciliation",
+		"Period Closing Voucher",
+		"Bank Transaction",
+	)
+}

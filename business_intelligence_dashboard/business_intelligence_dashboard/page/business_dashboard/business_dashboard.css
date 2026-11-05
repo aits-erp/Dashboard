@@ -1,0 +1,257 @@
+/* Business Intelligence Dashboard - tokens, layout and components */
+.bid {
+	--bg: #f4f5f7;
+	--surface: #ffffff;
+	--surface-2: #f8f9fb;
+	--ink: #0b0b0b;
+	--ink-2: #52514e;
+	--ink-3: #898781;
+	--line: #e3e5ea;
+	--grid: #e1e0d9;
+	--accent: #2a78d6;
+	--accent-soft: #e8f1fc;
+	--good: #006300;
+	--good-bg: #e6f4e6;
+	--bad: #b42318;
+	--bad-bg: #fdecea;
+	--warn: #8a5a00;
+	--warn-bg: #fff4d6;
+	--side-bg: #0f2a4a;
+	--side-ink: #cfd9e8;
+	--side-active: #ffffff;
+	--shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+	--shadow-hover: 0 6px 18px rgba(16, 24, 40, 0.12);
+	--radius: 12px;
+	--side-w: 248px;
+	display: grid;
+	grid-template-columns: var(--side-w) minmax(0, 1fr);
+	min-height: calc(100vh - 130px);
+	background: var(--bg);
+	border-radius: var(--radius);
+	overflow: hidden;
+	color: var(--ink);
+	font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+	transition: grid-template-columns 0.25s ease;
+	position: relative;
+}
+:root[data-theme="dark"] .bid {
+	--bg: #0d0d0d;
+	--surface: #1a1a19;
+	--surface-2: #212120;
+	--ink: #f0efec;
+	--ink-2: #c3c2b7;
+	--ink-3: #898781;
+	--line: #2c2c2a;
+	--grid: #2c2c2a;
+	--accent: #3987e5;
+	--accent-soft: #14253b;
+	--good: #0ca30c;
+	--good-bg: #0f2a12;
+	--bad: #f0857d;
+	--bad-bg: #3a1714;
+	--warn: #fab219;
+	--warn-bg: #33270a;
+	--side-bg: #101820;
+	--shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+	--shadow-hover: 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+.bid.collapsed { --side-w: 64px; }
+.bid * { box-sizing: border-box; }
+.bid button { font-family: inherit; }
+.bid-wrapper .page-head { position: static; }
+.bid-main { padding: 0 !important; }
+.bid-icon { flex: none; vertical-align: -3px; }
+.bid-scrim { display: none; }
+
+/* ---- sidebar */
+.bid-side { background: var(--side-bg); color: var(--side-ink); display: flex; flex-direction: column; min-width: 0; z-index: 30; }
+.bid-side-head { display: flex; align-items: center; gap: 10px; padding: 16px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.bid-logo { width: 32px; height: 32px; border-radius: 8px; background: var(--accent); color: #fff; display: grid; place-items: center; flex: none; }
+.bid-side-title { font-weight: 600; font-size: 14px; color: #fff; white-space: nowrap; overflow: hidden; flex: 1; }
+.bid-side .bid-icon-btn { color: var(--side-ink); }
+.bid-nav { display: flex; flex-direction: column; gap: 2px; padding: 10px 8px; overflow-y: auto; }
+.bid-nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 0; border-radius: 8px; background: transparent; color: var(--side-ink); font-size: 13.5px; text-align: left; cursor: pointer; position: relative; white-space: nowrap; transition: background 0.15s, color 0.15s; }
+.bid-nav-item:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.bid-nav-item.active { background: rgba(255, 255, 255, 0.14); color: var(--side-active); font-weight: 600; box-shadow: inset 3px 0 0 var(--accent); }
+.bid-nav-item.restricted { opacity: 0.45; }
+.bid-nav-label { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+.bid-nav-badge { background: #e8a200; color: #1a1a19; border-radius: 10px; font-size: 11px; font-weight: 700; padding: 1px 7px; }
+.bid-nav-badge.critical { background: #d03b3b; color: #fff; }
+.bid.collapsed .bid-side-title, .bid.collapsed .bid-nav-label { display: none; }
+.bid.collapsed .bid-nav-badge { position: absolute; top: 2px; right: 4px; padding: 0 5px; font-size: 10px; }
+.bid.collapsed .bid-collapse { transform: rotate(180deg); }
+.bid.collapsed .bid-side-head { flex-direction: column; padding: 12px 6px; }
+.bid-collapse { transition: transform 0.25s; }
+.bid-icon-btn { border: 0; background: transparent; color: var(--ink-2); width: 30px; height: 30px; border-radius: 8px; display: inline-grid; place-items: center; cursor: pointer; }
+.bid-icon-btn:hover, .bid-icon-btn.active { background: var(--accent-soft); color: var(--accent); }
+
+/* ---- content / top bar / filters */
+.bid-content { min-width: 0; padding: 0 20px 28px; }
+.bid-topbar { display: flex; align-items: center; gap: 12px; padding: 18px 0 10px; flex-wrap: wrap; }
+.bid-burger { display: none; }
+.bid-titles { flex: 1; min-width: 200px; }
+.bid-title { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: -0.01em; }
+.bid-subtitle { margin: 2px 0 0; color: var(--ink-3); font-size: 12.5px; }
+.bid-updated { color: var(--ink-3); font-size: 12px; display: flex; align-items: center; gap: 6px; }
+.bid-updated .bid-icon { color: var(--good); }
+.bid-spin { width: 12px; height: 12px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: bid-rot 0.8s linear infinite; display: inline-block; }
+@keyframes bid-rot { to { transform: rotate(360deg); } }
+.bid-filters { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 12px 14px; align-items: flex-end; }
+.bid-filter-primary, .bid-filter-more { display: contents; }
+.bid-filter-more[hidden] { display: none; }
+.bid-filter-more:not([hidden]) { display: flex; flex-wrap: wrap; gap: 12px 14px; width: 100%; padding-top: 10px; border-top: 1px dashed var(--line); order: 3; }
+.bid-field { flex: 1 1 150px; min-width: 130px; max-width: 220px; }
+.bid-field label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-3); margin-bottom: 3px; font-weight: 600; }
+.bid-field .frappe-control { margin-bottom: 0 !important; }
+.bid-field .form-group { margin-bottom: 0; }
+.bid-filter-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+.bid-filter-actions .btn { display: inline-flex; align-items: center; gap: 6px; }
+.bid-count { background: var(--accent); color: #fff; border-radius: 9px; font-size: 11px; padding: 0 6px; margin-left: 2px; }
+.bid-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; }
+.bid-chip { background: var(--accent-soft); color: var(--accent); border-radius: 14px; padding: 3px 4px 3px 10px; font-size: 12px; display: inline-flex; align-items: center; gap: 4px; }
+.bid-chip button { border: 0; background: transparent; color: inherit; cursor: pointer; display: grid; place-items: center; padding: 2px; border-radius: 50%; }
+.bid-body { margin-top: 16px; outline: none; }
+.bid-pane { animation: bid-in 0.3s ease both; }
+@keyframes bid-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ---- KPI cards */
+.bid-group-title { grid-column: 1 / -1; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); margin: 18px 0 8px; font-weight: 700; }
+.bid-pane > .bid-group-title:first-child { margin-top: 0; }
+.bid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+.bid-card { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; color: var(--ink); transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s; animation: bid-in 0.35s ease both; animation-delay: calc(var(--i, 0) * 25ms); }
+.bid-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+.bid-card:focus-visible, .bid-kpi.clickable:focus-visible, .bid-hbar:focus-visible, .bid-nav-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.bid-card-top { display: flex; align-items: center; gap: 10px; }
+.bid-card-icon { width: 34px; height: 34px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex: none; }
+.bid-card-label { font-size: 12.5px; color: var(--ink-2); font-weight: 600; line-height: 1.25; }
+.bid-card-value { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.bid-card-foot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12px; min-height: 20px; }
+.bid-card-prev { color: var(--ink-3); }
+.bid-delta { display: inline-flex; align-items: center; gap: 2px; padding: 1px 7px 1px 5px; border-radius: 10px; font-weight: 650; font-size: 12px; }
+.bid-delta.pos { color: var(--good); background: var(--good-bg); }
+.bid-delta.neg { color: var(--bad); background: var(--bad-bg); }
+.bid-delta.flat { color: var(--ink-3); background: var(--surface-2); }
+.bid-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.bid-grid > .bid-kpis { grid-column: 1 / -1; margin-bottom: 4px; }
+.bid-kpi { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; text-align: left; box-shadow: var(--shadow); color: var(--ink); }
+.bid-kpi.clickable { cursor: pointer; transition: box-shadow 0.18s, border-color 0.18s; }
+.bid-kpi.clickable:hover { box-shadow: var(--shadow-hover); border-color: var(--accent); }
+.bid-kpi-label { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.bid-kpi-value { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+.bid-kpi-sub { font-size: 11.5px; color: var(--ink-3); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.bid-kpi.tone-good .bid-kpi-value { color: var(--good); }
+.bid-kpi.tone-bad .bid-kpi-value { color: var(--bad); }
+.bid-kpi.tone-warn .bid-kpi-value { color: var(--warn); }
+
+/* ---- panels & grid */
+.bid-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+.bid-panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); min-width: 0; display: flex; flex-direction: column; grid-column: span 6; }
+.bid-panel.span-4 { grid-column: span 4; } .bid-panel.span-5 { grid-column: span 5; } .bid-panel.span-6 { grid-column: span 6; }
+.bid-panel.span-7 { grid-column: span 7; } .bid-panel.span-8 { grid-column: span 8; } .bid-panel.span-12 { grid-column: span 12; }
+.bid-panel-head { display: flex; justify-content: space-between; gap: 10px; padding: 14px 16px 0; align-items: flex-start; }
+.bid-panel-head h4 { margin: 0; font-size: 14px; font-weight: 650; }
+.bid-panel-head p { margin: 2px 0 0; font-size: 12px; color: var(--ink-3); }
+.bid-panel-tools { display: flex; gap: 6px; align-items: center; font-size: 12px; }
+.bid-panel-body { padding: 10px 14px 14px; min-width: 0; flex: 1; }
+.bid-chart { width: 100%; min-height: 200px; }
+.bid-chart .chart-legend text, .bid-chart .title, .bid-chart .y-axis-label { fill: var(--ink-2) !important; }
+.bid-chart text { fill: var(--ink-2); }
+.bid-chart .chart-container .axis, .bid-chart .chart-container .chart-label { fill: var(--ink-3); }
+.bid-chart .chart-container { font-family: inherit; }
+.bid-unit { font-size: 11px; color: var(--ink-3); margin: 0 0 2px 4px; }
+.bid-chart.navigable [data-point-index] { cursor: pointer; }
+.bid-link { color: var(--accent); cursor: pointer; text-decoration: none; font-weight: 500; }
+.bid-link:hover { text-decoration: underline; }
+
+/* ---- bar lists */
+.bid-hbars { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; max-height: 360px; overflow-y: auto; }
+.bid-hbar { width: 100%; display: grid; grid-template-columns: minmax(90px, 36%) 1fr auto; gap: 10px; align-items: center; background: transparent; border: 0; padding: 6px 8px; border-radius: 8px; color: var(--ink); text-align: left; cursor: default; }
+.bid-hbar.clickable { cursor: pointer; }
+.bid-hbar.clickable:hover { background: var(--accent-soft); }
+.bid-hbar-label { font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: flex; flex-direction: column; }
+.bid-hbar-label small { color: var(--ink-3); font-size: 11px; }
+.bid-hbar-track { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+.bid-hbar-fill { display: block; height: 100%; border-radius: 0 4px 4px 0; transition: width 0.5s ease; }
+.bid-hbar-value { font-size: 12.5px; font-weight: 600; min-width: 70px; text-align: right; }
+
+/* ---- tables */
+.bid-table-wrap { overflow-x: auto; max-height: 440px; overflow-y: auto; }
+.bid-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.bid-table th { position: sticky; top: 0; background: var(--surface); text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-3); padding: 8px; border-bottom: 1px solid var(--line); white-space: nowrap; z-index: 1; }
+.bid-table td { padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.bid-table tbody tr:hover { background: var(--surface-2); }
+.bid-table .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.bid-table tr.group td { font-weight: 650; background: var(--surface-2); }
+.bid-note { font-size: 12px; color: var(--ink-3); margin: 12px 0 0; display: flex; gap: 6px; align-items: flex-start; }
+.bid-note.tone-warn { color: var(--warn); background: var(--warn-bg); padding: 8px 10px; border-radius: 8px; }
+
+/* ---- states */
+.bid-empty, .bid-error { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 32px 16px; color: var(--ink-3); min-height: 160px; }
+.bid-empty p, .bid-error p { margin: 0; max-width: 420px; font-size: 13px; }
+.bid-error { color: var(--bad); }
+.bid-locked { color: var(--ink-2); }
+.bid-skeleton { display: flex; flex-direction: column; gap: 14px; }
+.bid-skel-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+.bid-skel-row.two { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.bid-skel { border-radius: var(--radius); background: linear-gradient(90deg, var(--surface) 25%, var(--surface-2) 37%, var(--surface) 63%); background-size: 400% 100%; animation: bid-shimmer 1.3s ease infinite; border: 1px solid var(--line); }
+.bid-skel-card { height: 104px; } .bid-skel-panel { height: 280px; }
+@keyframes bid-shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+
+/* ---- tabs, badges, alerts */
+.bid-tabs { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; flex-wrap: wrap; }
+.bid-tab { border: 1px solid var(--line); background: var(--surface); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 13px; color: var(--ink-2); }
+.bid-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.bid-spacer { flex: 1; }
+.bid-check { display: inline-flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--ink-2); margin: 0; }
+.bid-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 11.5px; font-weight: 650; }
+.bid-badge.sev-critical { color: var(--bad); background: var(--bad-bg); }
+.bid-badge.sev-warning { color: var(--warn); background: var(--warn-bg); }
+.bid-badge.sev-ok { color: var(--good); background: var(--good-bg); }
+.bid-badge.sev-info { color: var(--ink-2); background: var(--surface-2); }
+.bid-insight-summary { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+.bid-alerts { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
+.bid-alert { background: var(--surface); border: 1px solid var(--line); border-left-width: 4px; border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.bid-alert.sev-critical { border-left-color: #d03b3b; } .bid-alert.sev-warning { border-left-color: #fab219; } .bid-alert.sev-ok { border-left-color: #0ca30c; } .bid-alert.sev-info { border-left-color: var(--ink-3); }
+.bid-alert header { display: flex; gap: 12px; align-items: flex-start; }
+.bid-alert h4 { margin: 0; font-size: 14px; } .bid-alert p { margin: 2px 0 0; font-size: 12.5px; color: var(--ink-2); }
+.bid-alert-icon { color: var(--ink-3); } .bid-alert.sev-critical .bid-alert-icon { color: #d03b3b; } .bid-alert.sev-warning .bid-alert-icon { color: #c98500; } .bid-alert.sev-ok .bid-alert-icon { color: #0ca30c; }
+.bid-alert-meta { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; font-size: 13px; }
+.bid-alert-rows { list-style: none; margin: 0; padding: 0; font-size: 12.5px; }
+.bid-alert-rows li { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-top: 1px dashed var(--line); }
+.bid-alert-rows small { display: block; color: var(--ink-3); font-size: 11px; }
+.bid-alert-open { align-self: flex-start; border: 1px solid var(--line); background: var(--surface-2); border-radius: 8px; padding: 4px 10px; font-size: 12px; color: var(--accent); cursor: pointer; }
+
+/* ---- responsive */
+@media (max-width: 1100px) {
+	.bid-panel.span-4, .bid-panel.span-5, .bid-panel.span-7, .bid-panel.span-8 { grid-column: span 6; }
+	.bid-panel.span-7, .bid-panel.span-8 { grid-column: span 12; }
+}
+@media (max-width: 860px) {
+	.bid { grid-template-columns: minmax(0, 1fr); }
+	.bid-side { position: fixed; left: 0; top: 0; bottom: 0; width: 264px; transform: translateX(-100%); transition: transform 0.25s ease; box-shadow: 6px 0 24px rgba(0, 0, 0, 0.3); }
+	.bid.drawer-open .bid-side { transform: none; }
+	.bid-scrim { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 25; }
+	.bid.drawer-open .bid-scrim { display: block; }
+	.bid-burger { display: inline-grid; }
+	.bid-collapse { display: none; }
+	.bid.collapsed .bid-side-title, .bid.collapsed .bid-nav-label { display: initial; }
+	.bid-content { padding: 0 12px 24px; }
+	.bid-panel, .bid-panel.span-4, .bid-panel.span-5, .bid-panel.span-6, .bid-panel.span-7, .bid-panel.span-8 { grid-column: span 12; }
+	.bid-field { max-width: none; flex: 1 1 45%; }
+	.bid-filter-actions { margin-left: 0; width: 100%; }
+	.bid-hbar { grid-template-columns: minmax(70px, 40%) 1fr auto; }
+	.bid-cards { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 10px; }
+	.bid-card-value { font-size: 21px; }
+	.bid-title { font-size: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.bid *, .bid *::before { animation: none !important; transition: none !important; }
+}
+@media (forced-colors: active) {
+	.bid-card, .bid-panel, .bid-kpi { border: 1px solid CanvasText; }
+}
+@media print {
+	.bid { display: block; background: #fff; }
+	.bid-side, .bid-filters, .bid-topbar .bid-burger, .bid-panel-tools { display: none !important; }
+	.bid-panel, .bid-card { box-shadow: none; break-inside: avoid; }
+}

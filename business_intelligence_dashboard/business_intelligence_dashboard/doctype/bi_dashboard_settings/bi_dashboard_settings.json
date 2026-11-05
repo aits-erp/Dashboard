@@ -1,0 +1,156 @@
+{
+ "actions": [],
+ "creation": "2026-11-05 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "landing_section",
+  "home_page_roles",
+  "performance_section",
+  "cache_minutes",
+  "top_n",
+  "alerts_section",
+  "overdue_days_alert",
+  "high_outstanding_amount",
+  "low_margin_percent",
+  "column_break_alerts",
+  "expense_increase_percent",
+  "sales_decline_percent",
+  "pending_order_days",
+  "delayed_po_days",
+  "inventory_section",
+  "non_moving_days",
+  "slow_moving_orders"
+ ],
+ "fields": [
+  {
+   "fieldname": "landing_section",
+   "fieldtype": "Section Break",
+   "label": "Default Landing Page"
+  },
+  {
+   "description": "Users having any of these roles open the Business Intelligence Dashboard after login (only if they are also permitted to open it). Leave empty to disable the redirect.",
+   "fieldname": "home_page_roles",
+   "fieldtype": "Table",
+   "label": "Roles landing on the dashboard",
+   "options": "BI Dashboard Home Role"
+  },
+  {
+   "fieldname": "performance_section",
+   "fieldtype": "Section Break",
+   "label": "Performance & Display"
+  },
+  {
+   "default": "5",
+   "description": "How long dashboard results are cached. Posting or cancelling a transaction clears the cache immediately.",
+   "fieldname": "cache_minutes",
+   "fieldtype": "Int",
+   "label": "Cache Duration (minutes)"
+  },
+  {
+   "default": "10",
+   "fieldname": "top_n",
+   "fieldtype": "Int",
+   "label": "Rows in Top-N charts"
+  },
+  {
+   "fieldname": "alerts_section",
+   "fieldtype": "Section Break",
+   "label": "Alert Thresholds"
+  },
+  {
+   "default": "30",
+   "description": "Customer invoices overdue by at least this many days raise an alert.",
+   "fieldname": "overdue_days_alert",
+   "fieldtype": "Int",
+   "label": "Overdue Invoice Days"
+  },
+  {
+   "default": "500000",
+   "description": "A customer whose outstanding is at least this amount is flagged.",
+   "fieldname": "high_outstanding_amount",
+   "fieldtype": "Currency",
+   "label": "High Outstanding Amount"
+  },
+  {
+   "default": "10",
+   "description": "Net profit margin below this percentage raises an alert.",
+   "fieldname": "low_margin_percent",
+   "fieldtype": "Percent",
+   "label": "Low Profit Margin (%)"
+  },
+  {
+   "fieldname": "column_break_alerts",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "25",
+   "description": "An expense account growing by at least this percentage vs the previous period is flagged.",
+   "fieldname": "expense_increase_percent",
+   "fieldtype": "Percent",
+   "label": "Unusual Expense Increase (%)"
+  },
+  {
+   "default": "10",
+   "description": "Sales falling by at least this percentage vs the previous period raise an alert.",
+   "fieldname": "sales_decline_percent",
+   "fieldtype": "Percent",
+   "label": "Sales Decline (%)"
+  },
+  {
+   "default": "15",
+   "description": "Undelivered Sales Orders older than this many days are flagged.",
+   "fieldname": "pending_order_days",
+   "fieldtype": "Int",
+   "label": "Pending Sales Order Age (days)"
+  },
+  {
+   "default": "7",
+   "description": "Purchase Orders this many days past their schedule date are flagged.",
+   "fieldname": "delayed_po_days",
+   "fieldtype": "Int",
+   "label": "Delayed Purchase Order (days)"
+  },
+  {
+   "fieldname": "inventory_section",
+   "fieldtype": "Section Break",
+   "label": "Inventory Movement"
+  },
+  {
+   "default": "90",
+   "description": "Look-back window used to classify items as fast / slow / non moving.",
+   "fieldname": "non_moving_days",
+   "fieldtype": "Int",
+   "label": "Movement Window (days)"
+  },
+  {
+   "default": "3",
+   "description": "Items with at most this many outgoing transactions in the window are slow moving.",
+   "fieldname": "slow_moving_orders",
+   "fieldtype": "Int",
+   "label": "Slow Moving Max Transactions"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-11-05 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Business Intelligence Dashboard",
+ "name": "BI Dashboard Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
