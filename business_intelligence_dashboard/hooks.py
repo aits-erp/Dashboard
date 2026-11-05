@@ -279,3 +279,6 @@ doc_events = {
 		"Bank Transaction",
 	)
 }
+
+# ERPNext provides the accounting, selling, buying and stock data the dashboard reads
+required_apps = ["erpnext"]
