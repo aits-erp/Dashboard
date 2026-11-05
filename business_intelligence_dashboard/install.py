@@ -4,6 +4,18 @@ ROLE = "BI Dashboard User"
 PAGE = "business-dashboard"
 INIT_MARKER = "bid_settings_initialised"
 
+# Roles that open the dashboard right after login on a fresh install (editable in BI Dashboard Settings).
+# Management / finance roles plus the dedicated role; everyone else keeps their normal home page.
+DEFAULT_LANDING_ROLES = (
+	ROLE,
+	"System Manager",
+	"Accounts Manager",
+	"Sales Manager",
+	"Purchase Manager",
+	"Stock Manager",
+	"Auditor",
+)
+
 
 def before_install():
 	# the Page and Workspace reference this role, so it must exist before they are synced
@@ -28,7 +40,7 @@ def ensure_role():
 
 
 def ensure_settings():
-	"""Seed the settings once with the dedicated role as the only landing role.
+	"""Seed the settings once with the default landing roles.
 
 	A marker (not the table contents) records that seeding happened, so an administrator
 	who deliberately empties the role list to switch the redirect off is not overridden
@@ -38,7 +50,7 @@ def ensure_settings():
 		return
 	settings = frappe.get_doc("BI Dashboard Settings")
 	if not settings.get("home_page_roles"):
-		settings.set("home_page_roles", [{"role": ROLE}])
+		settings.set("home_page_roles", [{"role": r} for r in DEFAULT_LANDING_ROLES])
 	settings.flags.ignore_permissions = True
 	settings.save()
 	frappe.db.set_default(INIT_MARKER, "1")

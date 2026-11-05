@@ -282,3 +282,17 @@ doc_events = {
 
 # ERPNext provides the accounting, selling, buying and stock data the dashboard reads
 required_apps = ["erpnext"]
+
+# Apps screen entry. Frappe v15 chooses the post-login path from the apps the user can see:
+# with ERPNext alone it goes to /app/home (ignoring boot home_page); with a second desk app it goes
+# to /app, where boot.py's home page takes over. has_permission hides the entry from users who cannot
+# open the dashboard, so they are never sent to an inaccessible page.
+add_to_apps_screen = [
+	{
+		"name": "business_intelligence_dashboard",
+		"logo": "/assets/business_intelligence_dashboard/images/logo.svg",
+		"title": "Business Intelligence Dashboard",
+		"route": "/app/business-dashboard",
+		"has_permission": "business_intelligence_dashboard.boot.has_app_permission",
+	}
+]

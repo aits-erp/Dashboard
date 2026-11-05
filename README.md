@@ -63,12 +63,22 @@ Companies and Customer / Supplier / Territory / Item Group / Warehouse / Cost Ce
 
 ## Default landing page
 
-Frappe v15 opens `frappe.boot.home_page` when a system user lands on `/app` (login redirects there). The app's `boot_session`
-hook sets it to the dashboard only for users who (a) hold a role listed in **BI Dashboard Settings > Roles landing on the
-dashboard** and (b) may open the page. Everybody else keeps their normal home page and is never sent to a page they cannot open.
-The shipped default is the single role **BI Dashboard User** - assign it to the managers who should land on the dashboard, or add
-roles (e.g. *Accounts Manager*) in the settings. Empty the table to disable the redirect. `get_website_user_home_page` provides the same
-fallback for the website `/` route. No Frappe / ERPNext files are modified.
+Two supported Frappe v15 mechanisms work together (no Frappe / ERPNext file is modified):
+
+1. **Apps screen entry** (`add_to_apps_screen` + `has_permission`): after login Frappe sends the user to
+   `get_default_path()`. With ERPNext as the only desk app that is `/app/home`, which ignores the home page setting; with the
+   dashboard registered as a second desk app it is `/app`. The entry is shown only to users who may open the page.
+2. **`boot_session` hook** sets `frappe.boot.home_page` for users who hold a role listed in
+   **BI Dashboard Settings > Roles landing on the dashboard**; `/app` then opens the dashboard.
+
+Fresh installs seed the roles *BI Dashboard User, System Manager, Accounts Manager, Sales Manager, Purchase Manager,
+Stock Manager, Auditor* (Administrator holds every role, so it lands there too). Edit the table to change who lands on the
+dashboard; empty it to switch the redirect off. Everyone else keeps their normal home page and is never sent to a page they cannot
+open. A one-time patch widens sites that were seeded with the old single-role default (it never overrides a customised list).
+`get_website_user_home_page` provides the same fallback for the website `/` route.
+
+If another app also redirects after login (for example a custom script sending `/app` to a different page), that app wins or
+races with this one - remove its redirect.
 
 ## Configuration
 

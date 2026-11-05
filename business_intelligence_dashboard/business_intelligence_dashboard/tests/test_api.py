@@ -8,7 +8,7 @@ dashboard figures = ERPNext's standard reports).
 
 import frappe
 from frappe.tests.utils import FrappeTestCase
-from frappe.utils import add_days, flt, getdate
+from frappe.utils import add_days, flt
 
 from business_intelligence_dashboard.business_intelligence_dashboard.api import accounting, cash_flow
 from business_intelligence_dashboard.business_intelligence_dashboard.api.utils import (
@@ -136,5 +136,9 @@ class TestEndpoints(FrappeTestCase):
 		from business_intelligence_dashboard import boot
 
 		self.assertFalse(boot.should_land_on_dashboard("Guest"))
-		self.assertFalse(boot.should_land_on_dashboard("Administrator"))
-		self.assertEqual(getdate("2026-01-01").year, 2026)
+		self.assertFalse(boot.can_open_dashboard("Guest"))
+		# Administrator holds every role, so it follows the configured landing roles like anyone else
+		self.assertTrue(boot.can_open_dashboard("Administrator"))
+		self.assertEqual(boot.should_land_on_dashboard("Administrator"), bool(boot.landing_roles()))
+		# the apps-screen entry mirrors page access, so nobody is routed to a page they cannot open
+		self.assertTrue(boot.has_app_permission())
